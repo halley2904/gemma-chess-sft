@@ -1,0 +1,17 @@
+model_id: google/gemma-3-270m-it
+input_format: fen_only
+target_format: uci
+human:
+  min_player_elo: 1800
+  max_games_pilot: 1000
+  max_plies_per_game: 120
+split:
+  train: 0.90
+  validation: 0.05
+  test: 0.05
+deduplication:
+  key: exact_fen
+  across_splits: true
+engine:
+  enabled: false
+  depth: 12

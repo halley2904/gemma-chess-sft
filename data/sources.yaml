@@ -1,0 +1,15 @@
+sources:
+  lichess_standard_games:
+    url: https://database.lichess.org/
+    licence: CC0 (verify exact export terms)
+    status: not_downloaded
+  chessbench:
+    url: https://github.com/google-deepmind/searchless_chess
+    paper: https://arxiv.org/abs/2402.04494
+    licence: mixed; check exact artifact terms
+    status: not_downloaded
+  gemma:
+    model_id: google/gemma-3-270m-it
+    url: https://huggingface.co/google/gemma-3-270m-it
+    licence: Gemma Terms of Use
+    status: terms_acceptance_required

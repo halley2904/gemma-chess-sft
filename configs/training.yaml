@@ -1,0 +1,12 @@
+model_id: google/gemma-3-270m-it
+task: chess_move_prediction
+method: supervised_fine_tuning
+training_status: not_started
+compute: kaggle_free_gpu
+resume_from_checkpoint: true
+save_steps: 100
+max_seq_length: 256
+output_dir: /kaggle/working/checkpoints/gemma-chess-sft
+notes:
+  - Do not start training before tokenizer audit and dataset validation.
+  - Inspect actual Kaggle accelerator before deciding batch size and precision.
