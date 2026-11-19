@@ -13,6 +13,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: lichess-pilot-collection
+  cancel-in-progress: true
+
 jobs:
   collect:
     runs-on: ubuntu-latest
@@ -58,8 +62,16 @@ jobs:
           echo "Compressed dataset size: $SIZE bytes"
           test "$SIZE" -lt 90000000
 
-      - name: Commit processed pilot to repository
+      - name: Commit processed pilot to latest main
         run: |
+          mkdir -p /tmp/pilot-output
+          cp data/processed/lichess_2014_01_pilot.jsonl.gz /tmp/pilot-output/
+          cp data/processed/manifest.json /tmp/pilot-output/
+          cp data/processed/lichess_2014_01_pilot.jsonl.gz.summary.json /tmp/pilot-output/
+          git fetch origin main
+          git reset --hard origin/main
+          mkdir -p data/processed
+          cp /tmp/pilot-output/* data/processed/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f data/processed/lichess_2014_01_pilot.jsonl.gz
@@ -69,5 +81,5 @@ jobs:
             echo "No dataset changes to commit."
           else
             git commit -m "data: add Lichess human-move SFT pilot"
-            git push
+            git push origin HEAD:main
           fi
