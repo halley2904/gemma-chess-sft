@@ -10,11 +10,15 @@ import hashlib
 import io
 import json
 import random
+from datetime import datetime, timezone
 from pathlib import Path
 
 import chess
 import chess.pgn
 import zstandard
+
+
+DEFAULT_SOURCE_URL = "https://database.lichess.org/standard/lichess_db_standard_rated_2013-01.pgn.zst"
 
 
 def sha256_file(path: Path) -> str:
@@ -107,7 +111,7 @@ def main():
     parser.add_argument("--min-base-seconds", type=int, default=180, help="Exclude bullet/ultrabullet")
     parser.add_argument("--max-plies-per-game", type=int, default=120)
     parser.add_argument("--seed", type=int, default=20261119)
-    parser.add_argument("--source-url", default="https://database.lichess.org/standard/lichess_db_standard_rated_2014-01.pgn.zst")
+    parser.add_argument("--source-url", default=DEFAULT_SOURCE_URL)
     args = parser.parse_args()
 
     source_path = Path(args.pgn_zst)
@@ -120,7 +124,6 @@ def main():
     if not sampled:
         raise SystemExit("No games passed the filters. Check the archive and/or relax filters.")
 
-    # First assign whole games to splits. Aggregate repeated exact FENs within each split.
     by_split = {name: {} for name in ("train", "validation", "test")}
     fen_splits = collections.defaultdict(set)
     game_splits = collections.Counter()
@@ -155,7 +158,6 @@ def main():
             entry["ply_max"] = max(entry["ply_max"], ply)
             board.push(move)
 
-    # Remove any exact FEN that appears in more than one game-level split.
     cross_split_fens = {fen for fen, splits in fen_splits.items() if len(splits) > 1}
     records_by_split = collections.Counter()
     rows = []
@@ -164,7 +166,6 @@ def main():
             if fen in cross_split_fens:
                 continue
             total = sum(entry["moves"].values())
-            # Majority human move; lexical tie-break makes output deterministic.
             target, target_count = sorted(entry["moves"].items(), key=lambda pair: (-pair[1], pair[0]))[0]
             board = chess.Board(fen)
             move = chess.Move.from_uci(target)
@@ -202,7 +203,6 @@ def main():
     if not rows:
         raise SystemExit("No SFT records survived validation and split de-duplication.")
 
-    # Deterministic gzip output.
     with out_path.open("wb") as raw_out:
         with gzip.GzipFile(fileobj=raw_out, mode="wb", mtime=0, compresslevel=6) as gz:
             with io.TextIOWrapper(gz, encoding="utf-8") as text_out:
@@ -245,7 +245,7 @@ def main():
         "source_archive_sha256": summary["source_archive_sha256"],
         "source_url": args.source_url,
         "source_license": "CC0-1.0 (Lichess database export)",
-        "retrieval_date_utc": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
+        "retrieval_date_utc": datetime.now(timezone.utc).isoformat(),
         "model_target": "google/gemma-3-270m-it",
         "input": "FEN only",
         "target": "one UCI move",

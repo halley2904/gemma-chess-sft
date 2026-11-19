@@ -21,7 +21,7 @@ A lightweight, reproducible chess move-learning project using **one pretrained m
 5. Split by original game, deduplicate exact positions and remove cross-split position collisions.
 6. Write compressed SFT JSONL plus a manifest and quality summary.
 
-The first automated pilot uses the January 2014 Lichess standard-game archive (a small historical monthly archive), samples up to 1,000 eligible games deterministically, and writes a compressed dataset under `data/processed/`. This is a pipeline pilot, not the final training corpus.
+The first automated pilot uses the complete January 2013 Lichess standard-game archive (about 17.8 MB compressed, 121,332 games). It samples up to 1,000 eligible games deterministically. This is a small pipeline pilot, not the final training corpus.
 
 ## SFT format
 
@@ -31,7 +31,6 @@ Each record contains a FEN-only user prompt and one UCI move as the assistant ta
 
 ```bash
 pip install -e ".[dev]"
-pip install zstandard transformers
 python scripts/collect_lichess_sft.py --pgn-zst path/to/lichess.pgn.zst --out data/processed/pilot.jsonl.gz
 python scripts/validate_sft.py --input data/processed/pilot.jsonl.gz
 python scripts/audit_tokenizer.py --model google/gemma-3-270m-it
@@ -62,7 +61,7 @@ Primary metrics: legal move rate and centipawn loss under a fixed Stockfish prot
 
 - [x] Project scaffold and data schema
 - [x] Deterministic Lichess pilot collection pipeline
-- [ ] GitHub Actions data collection run succeeds
-- [ ] Inspect pilot dataset quality and distribution
+- [x] GitHub Actions and quality checks
+- [ ] Collect and inspect pilot dataset
 - [ ] Freeze a larger train/validation/test corpus
 - [ ] Training (not started)

@@ -3,11 +3,11 @@ sources:
     url: "https://database.lichess.org/"
     licence: "CC0-1.0"
     pilot_archive:
-      url: "https://database.lichess.org/standard/lichess_db_standard_rated_2014-01.pgn.zst"
-      month: "2014-01"
-      published_size: "111 MB compressed"
-      published_games: 697600
-      purpose: "small reproducible pipeline pilot; not the final corpus"
+      url: "https://database.lichess.org/standard/lichess_db_standard_rated_2013-01.pgn.zst"
+      month: "2013-01"
+      published_size: "17.8 MB compressed"
+      published_games: 121332
+      purpose: "complete small historical month for reproducible pipeline pilot; not the final corpus"
     status: "workflow_downloads_pilot_archive"
   chessbench:
     url: "https://github.com/google-deepmind/searchless_chess"
