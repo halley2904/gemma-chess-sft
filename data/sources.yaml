@@ -1,15 +1,21 @@
 sources:
   lichess_standard_games:
-    url: https://database.lichess.org/
-    licence: CC0 (verify exact export terms)
-    status: not_downloaded
+    url: "https://database.lichess.org/"
+    licence: "CC0-1.0"
+    pilot_archive:
+      url: "https://database.lichess.org/standard/lichess_db_standard_rated_2014-01.pgn.zst"
+      month: "2014-01"
+      published_size: "111 MB compressed"
+      published_games: 697600
+      purpose: "small reproducible pipeline pilot; not the final corpus"
+    status: "workflow_downloads_pilot_archive"
   chessbench:
-    url: https://github.com/google-deepmind/searchless_chess
-    paper: https://arxiv.org/abs/2402.04494
-    licence: mixed; check exact artifact terms
-    status: not_downloaded
+    url: "https://github.com/google-deepmind/searchless_chess"
+    paper: "https://arxiv.org/abs/2402.04494"
+    licence: "mixed; check exact artifact terms"
+    status: "not_downloaded"
   gemma:
-    model_id: google/gemma-3-270m-it
-    url: https://huggingface.co/google/gemma-3-270m-it
-    licence: Gemma Terms of Use
-    status: terms_acceptance_required
+    model_id: "google/gemma-3-270m-it"
+    url: "https://huggingface.co/google/gemma-3-270m-it"
+    licence: "Gemma Terms of Use"
+    status: "terms_acceptance_required"
