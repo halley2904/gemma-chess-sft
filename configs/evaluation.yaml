@@ -1,0 +1,12 @@
+metrics:
+  primary: [legal_move_rate, centipawn_loss]
+  secondary: [top1_move_agreement, puzzle_accuracy, win_draw_loss, latency]
+engine:
+  name: Stockfish
+  version: record_exact_version
+  depth_or_nodes: record_exact_setting
+  time_control: fixed
+matches:
+  colours: [white, black]
+  games: determine_after_pilot
+  illegal_move_policy: forfeit
