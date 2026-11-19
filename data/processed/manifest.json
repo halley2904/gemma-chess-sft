@@ -1,0 +1,19 @@
+{
+  "dataset_name": "lichess-standard-human-moves-pilot",
+  "format": "gzip-compressed JSON Lines",
+  "data_file": "lichess_2013_01_pilot.jsonl.gz",
+  "data_file_sha256": "437a9bab8a1b0c6497dc313b566f5c1668b395d54a83fca8e3f99e28d4dc7a59",
+  "source_archive_sha256": "aa40b3671fa3cf1072eb182892cd90b0e1e003a4a5943492f64b77e7f3fd1635",
+  "source_url": "https://database.lichess.org/standard/lichess_db_standard_rated_2013-01.pgn.zst",
+  "source_license": "CC0-1.0 (Lichess database export)",
+  "retrieval_date_utc": "2026-11-19T11:33:41.183234+00:00",
+  "model_target": "google/gemma-3-270m-it",
+  "input": "FEN only",
+  "target": "one UCI move",
+  "summary_file": "lichess_2013_01_pilot.jsonl.gz.summary.json",
+  "limitations": [
+    "Human moves are behavioural demonstrations, not guaranteed best moves.",
+    "Pilot uses a single historical monthly archive and is not a final representative corpus.",
+    "FEN does not encode the complete repetition history of a game."
+  ]
+}
