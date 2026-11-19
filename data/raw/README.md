@@ -1,0 +1,1 @@
+Place downloaded raw files here locally or in Kaggle storage. Do not commit large PGN, compressed database, or ChessBench files to Git. Record source URL, retrieval date, licence, filters, and checksum in `data/sources.yaml`.
